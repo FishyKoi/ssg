@@ -13,8 +13,11 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         parts = node.text.split(delimiter)
 
         # Odd number of parts = valid pairs; even = unmatched delimiter
+        # If unmatched → DO NOT throw. Leave text untouched.
         if len(parts) % 2 == 0:
-            raise ValueError(f"Invalid markdown syntax: missing closing delimiter '{delimiter}'")
+            new_nodes.append(node)
+            continue
+
 
         # Rebuild into new TextNodes
         for index, part in enumerate(parts):
