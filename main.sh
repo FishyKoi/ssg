@@ -1,17 +1,9 @@
 #!/bin/bash
 set -e
 
-echo "Generating site..."
+# Run the generator
+PYTHONPATH=src python3 src/main.py
 
-PYTHONPATH=src python3 - <<EOF
-from copy_static import copy_static
-# If you have your generator file, import it here
-# from generate_html import generate_site
-
-copy_static("static", "public")
-
-# If generator exists, enable this:
-# generate_site("content", "template.html", "public")
-EOF
-
-echo "Done!"
+# Start server
+cd public
+python3 -m http.server 8888
