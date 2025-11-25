@@ -55,10 +55,14 @@ def main():
     else:
         basepath = "/"
 
-    if not basepath.startswith("/"):
-        basepath = "/" + basepath
-    if not basepath.endswith("/"):
-        basepath += "/"
+    # Normalize basepath
+    basepath = sys.argv[1] if len(sys.argv) > 1 else "/"
+
+    basepath = basepath.strip()             # remove whitespace
+    basepath = basepath.rstrip("/")         # remove ALL trailing slashes
+    basepath = "/" + basepath.lstrip("/")   # ensure EXACTLY one leading slash
+    basepath += "/"                         # ensure EXACTLY one trailing slash
+
 
     # GitHub Pages uses docs/, not public/
     dest_dir = "docs"
